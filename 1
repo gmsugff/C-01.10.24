@@ -1,0 +1,342 @@
+namespace p32bx01._10._24
+{
+    /// <summary>
+    /// 
+    /// </summary>
+    /* internal class Program
+     {*/
+    /// <summary>
+    /// №1
+    /// </summary>
+    /* static char[,] board = new char[3, 3];
+         static bool playerTurn = true; 
+         static Random random = new Random();
+     static void Main(string[] args)
+     {
+
+
+         InitializeBoard();
+         bool gameOver = false;
+         /// <summary>
+         /// Randomly decide who starts the game
+         /// </summary>
+
+         playerTurn = random.Next(0, 2) == 0;
+
+         while (!gameOver)
+         {
+             DisplayBoard();
+
+             if (playerTurn)
+             {
+                 PlayerMove();
+                 gameOver = CheckGameOver();
+             }
+             else
+             {
+                 ComputerMove();
+                 gameOver = CheckGameOver();
+             }
+
+             playerTurn = !playerTurn; 
+         }
+     }
+     /// <summary>
+     /// Initialize the game board
+     /// </summary>
+
+     static void InitializeBoard()
+     {
+         for (int i = 0; i < 3; i++)
+         {
+             for (int j = 0; j < 3; j++)
+             {
+                 board[i, j] = ' ';
+             }
+         }
+     }
+     /// <summary>
+     ///  Display the game board
+     /// </summary>
+
+     static void DisplayBoard()
+     {
+         Console.WriteLine("  0 1 2");
+         for (int i = 0; i < 3; i++)
+         {
+             Console.Write(i + " ");
+             for (int j = 0; j < 3; j++)
+             {
+                 Console.Write(board[i, j] + " ");
+             }
+             Console.WriteLine();
+         }
+     }
+     /// <summary>
+     /// Player move
+     /// </summary>
+
+     static void PlayerMove()
+     {
+         Console.WriteLine("Enter your move (row column):");
+         string[] input = Console.ReadLine().Split();
+         int row = int.Parse(input[0]);
+         int col = int.Parse(input[1]);
+
+         if (row < 0 || row > 2 || col < 0 || col > 2 || board[row, col] != ' ')
+         {
+             Console.WriteLine("Invalid move! Try again.");
+             PlayerMove();
+         }
+         else
+         {
+             board[row, col] = 'X';
+         }
+     }
+     /// <summary>
+     ///  Computer move
+     /// </summary>
+
+     static void ComputerMove()
+     {
+         int row, col;
+         do
+         {
+             row = random.Next(0, 3);
+             col = random.Next(0, 3);
+         } while (board[row, col] != ' ');
+
+         Console.WriteLine("Computer's move: " + row + " " + col);
+         board[row, col] = 'O';
+     }
+     /// <summary>
+     ///  Check if the game is over
+     /// </summary>
+
+     static bool CheckGameOver()
+     {
+         /// <summary>
+         /// Check rows, columns, and diagonals for a win
+         /// </summary>
+
+         for (int i = 0; i < 3; i++)
+         {
+             if (board[i, 0] != ' ' && board[i, 0] == board[i, 1] && board[i, 1] == board[i, 2])
+             {
+                 Console.WriteLine(board[i, 0] + " wins!");
+                 return true;
+             }
+             if (board[0, i] != ' ' && board[0, i] == board[1, i] && board[1, i] == board[2, i])
+             {
+                 Console.WriteLine(board[0, i] + " wins!");
+                 return true;
+             }
+         }
+         if (board[0, 0] != ' ' && board[0, 0] == board[1, 1] && board[1, 1] == board[2, 2])
+         {
+             Console.WriteLine(board[0, 0] + " wins!");
+             return true;
+         }
+         if (board[0, 2] != ' ' && board[0, 2] == board[1, 1] && board[1, 1] == board[2, 0])
+         {
+             Console.WriteLine(board[0, 2] + " wins!");
+             return true;
+         }
+
+
+         bool fullBoard = true;
+         for (int i = 0; i < 3; i++)
+         {
+             for (int j = 0; j < 3; j++)
+             {
+                 if (board[i, j] == ' ')
+                 {
+                     fullBoard = false;
+                     break;
+                 }
+             }
+             if (!fullBoard)
+             {
+                 break;
+             }
+         }
+
+         if (fullBoard)
+         {
+             Console.WriteLine("It's a tie!");
+             return true;
+         }
+
+         return false;
+     }
+    }
+*/
+   /* internal class Program
+    {*/
+        /// <summary>
+        ///  №1
+        /// </summary>
+        /*static void Main()
+        {
+            int currentPlayer = 1;
+            int[] gameBoard = new int[9];
+
+            bool gameEnded = false;
+
+            while (!gameEnded)
+            {
+                DrawBoard(gameBoard);
+
+                int move = GetNextMove(currentPlayer, gameBoard);
+
+                gameBoard[move] = currentPlayer;
+
+                if (CheckForWin(gameBoard, currentPlayer))
+                {
+                    Console.WriteLine($"Игрок {currentPlayer} победил!");
+                    gameEnded = true;
+                }
+                else if (CheckForDraw(gameBoard))
+                {
+                    Console.WriteLine("Ничья!");
+                    gameEnded = true;
+                }
+
+                currentPlayer = (currentPlayer == 1) ? 2 : 1;
+            }
+        }
+
+        static void DrawBoard(int[] gameBoard)
+        {
+            for (int i = 0; i < 9; i++)
+            {
+                Console.Write(gameBoard[i] == 0 ? "_" : gameBoard[i].ToString());
+                if ((i + 1) % 3 == 0)
+                    Console.WriteLine();
+            }
+        }
+
+        static int GetNextMove(int currentPlayer, int[] gameBoard)
+        {
+            int move;
+            while (true)
+            {
+                Console.WriteLine($"Игрок {currentPlayer}, введите номер ячейки (от 0 до 8):");
+
+                if (!int.TryParse(Console.ReadLine(), out move) || move < 0 || move > 8 || gameBoard[move] != 0)
+                {
+                    Console.WriteLine("Некорректный ход. Попробуйте снова.");
+                }
+                else
+                {
+                    break;
+                }
+            }
+            return move;
+        }
+
+        static bool CheckForWin(int[] gameBoard, int player)
+        {
+            /// <summary>
+            ///   Проверка на победу по горизонталям, вертикалям и диагоналям
+            /// </summary>
+            
+            for (int i = 0; i < 3; i++)
+            {
+                if (gameBoard[i] == player && gameBoard[i + 3] == player && gameBoard[i + 6] == player)
+                    return true;
+                if (gameBoard[i * 3] == player && gameBoard[i * 3 + 1] == player && gameBoard[i * 3 + 2] == player)
+                    return true;
+            }
+            if ((gameBoard[0] == player && gameBoard[4] == player && gameBoard[8] == player) ||
+                (gameBoard[2] == player && gameBoard[4] == player && gameBoard[6] == player))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        static bool CheckForDraw(int[] gameBoard)
+        {
+            foreach (int cell in gameBoard)
+            {
+                if (cell == 0)
+                    return false;
+            }
+            return true;
+
+    }
+        }*/
+
+
+        namespace TextConverter
+    {
+        public class MorseCodeConverter
+        {
+            private static readonly Dictionary<char, string> _morseAlphabet = new Dictionary<char, string>()
+{
+{'A', ".-"}, {'B', "-..."}, {'C', "-.-."}, {'D', "-.."}, {'E', "."},
+{'F', "..-."}, {'G', "--."}, {'H', "...."}, {'I', ".."}, {'J', ".---"},
+{'K', "-.-"}, {'L', ".-.."}, {'M', "--"}, {'N', "-."}, {'O', "---"},
+{'P', ".--."}, {'Q', "--.-"}, {'R', ".-."}, {'S', "..."}, {'T', "-"},
+{'U', "..-"}, {'V', "...-"}, {'W', ".--"}, {'X', "-..-"}, {'Y', "-.--"},
+{'Z', "--.."}, {'0', "-----"}, {'1', ".----"}, {'2', "..---"}, {'3', "...--"},
+{'4', "....-"}, {'5', "....."}, {'6', "-...."}, {'7', "--..."}, {'8', "---.."},
+{'9', "----."}, {' ', " "}};
+            public string TextToMorseCode(string text)
+            {
+                text = text.ToUpper();
+                string morseCode = "";
+                foreach (char c in text)
+                {
+                    if (_morseAlphabet.ContainsKey(c))
+                    {
+                        morseCode += _morseAlphabet[c] + " ";
+                    }
+                }
+                return morseCode.Trim();
+            }
+
+            public string MorseCodeToText(string morseCode)
+            {
+                string[] words = morseCode.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+                string text = "";
+                foreach (string word in words)
+                {
+                    foreach (var letter in _morseAlphabet)
+                    {
+                        if (word == letter.Value)
+                        {
+                            text += letter.Key;
+                            break;
+                        }
+                    }
+                }
+                return text;
+            }
+        }
+  }
+        internal class Program
+        {
+            static void Main(string[] args)
+        {
+            MorseCodeConverter converter = new MorseCodeConverter();
+
+            Console.WriteLine("Enter text to convert to Morse code:");
+            string text = Console.ReadLine();
+
+            string morseCode = converter.TextToMorseCode(text);
+            Console.WriteLine("Morse code: " + morseCode);
+
+            Console.WriteLine("Enter Morse code to convert to text:");
+            string inputMorseCode = Console.ReadLine();
+
+            string convertedText = converter.MorseCodeToText(inputMorseCode);
+            Console.WriteLine("Converted text: " + convertedText);
+        }
+
+
+
+    }
+ }
